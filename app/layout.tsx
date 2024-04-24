@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { PrimeReactProvider } from "primereact/api";
-import "primereact/resources/themes/lara-dark-cyan/theme.css";
+// import "primereact/resources/themes/lara-dark-cyan/theme.css";
+import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,6 +16,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script
+        id="primereact-styles"
+        dangerouslySetInnerHTML={{
+          __html: `
+              const style = document.createElement('style')
+              style.innerHTML = '@layer tailwind-base, primereact, tailwind-utilities;'
+              style.setAttribute('type', 'text/css')
+              document.querySelector('head').prepend(style)
+            `,
+        }}
+      />
+
       <PrimeReactProvider>
         <body>{children}</body>
       </PrimeReactProvider>
